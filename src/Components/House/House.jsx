@@ -1,7 +1,16 @@
 import React, { Component } from "react";
-import "./House";
+import { Link } from "react-router-dom";
 
 export default class House extends Component {
+  constructor() {
+    super();
+  }
+  //
+  handleDelete = () => {
+    this.props.deleteHouse(this.props.house.id);
+    //this.props.getHouses();
+  };
+
   render() {
     let { house } = this.props;
     return (
@@ -12,6 +21,9 @@ export default class House extends Component {
         <p>City: {house.city}</p>
         <p>State: {house.state}</p>
         <p>Zip: {house.zip}</p>
+        <Link to="/">
+          <button onClick={this.handleDelete}>Delete</button>
+        </Link>
       </div>
     );
   }

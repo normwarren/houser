@@ -11,7 +11,8 @@ app.use(express.json());
 
 // ENDPOINTS
 app.get("/api/houses", houseCtrl.getHouses);
-// app.post("/api/product", prodCtrl.create);
+app.post("/api/house", houseCtrl.addHouse);
+app.delete("/api/house/:id", houseCtrl.delete);
 
 // CONNECT TO DATABASE
 massive(CONNECTION_STRING)

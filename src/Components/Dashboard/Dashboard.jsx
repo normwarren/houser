@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import House from "../House/House";
 import { Link } from "react-router-dom";
 
@@ -10,20 +11,41 @@ export default class Dashboard extends Component {
     };
   }
 
-  getHouses() {}
-  deleteHouse() {}
+  deleteHouse = id => {
+    axios
+      .delete(`/api/house/${id}`)
+      .then(res => {
+        this.setState({
+          houses: res.data
+        });
+      })
+      .catch(err => console.log("we have a problem:", err));
+  };
 
-  // componentDidMount() {
-  //   axios.get('/api/animals').then(res => {
-  //     this.setState({
-  //       animals: res.data
-  //     })
-  //   }).catch(err => console.log('we have a problem:', err))
-  // }
+  getHouses() {
+    axios
+      .get("/api/houses")
+      .then(res => {
+        this.setState({
+          houses: res.data
+        });
+      })
+      .catch(err => console.log("we have a problem:", err));
+  }
+  componentDidMount() {
+    this.getHouses();
+  }
 
   render() {
     const houses = this.state.houses.map(house => {
-      return <House key={house.id} house={house} />;
+      return (
+        <House
+          key={house.id}
+          house={house}
+          deleteHouse={this.deleteHouse}
+          //getHouses={this.getHouses}
+        />
+      );
     });
     return (
       <div>

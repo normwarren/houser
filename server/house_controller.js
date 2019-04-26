@@ -1,7 +1,6 @@
 module.exports = {
   getHouses: (req, res, next) => {
     const dbInstance = req.app.get("db");
-    console.log(dbInstance.read_houses());
     dbInstance
       .read_houses()
       .then(houses => res.status(200).send(houses))
@@ -10,20 +9,29 @@ module.exports = {
           errorMessage:
             "Oops! Something went wrong. Our engineers have been informed!"
         });
-        console.log(err);
+      });
+  },
+  addHouse(req, res, next) {
+    const db = req.app.get("db");
+    const { name, address, city, state, zip } = req.body;
+
+    db.add_house([name, address, city, state, zip, "", 0, 0])
+      .then(response => {
+        res.status(200).send(response);
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      });
+  },
+  delete(req, res, next) {
+    const db = req.app.get("db");
+    const { id } = req.params;
+    db.delete_house([id])
+      .then(house => {
+        res.status(200).send(house);
+      })
+      .catch(err => {
+        res.status(500).send(err);
       });
   }
-  // create(req, res, next) {
-  //   const db = req.app.get("db"); //client sends in param, query, or body (how do I pass params for creating new? <input> ?
-  //   const { name, price, image_url } = req.body;
-
-  //   db.create_product([name, price, image_url])
-  //     .then(response => {
-  //       res.status(200).send(response);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //       res.status(500).send(err);
-  //     });
-  // }
 };
