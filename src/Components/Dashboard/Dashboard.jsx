@@ -43,7 +43,7 @@ export default class Dashboard extends Component {
           key={house.id}
           house={house}
           deleteHouse={this.deleteHouse}
-          //getHouses={this.getHouses}
+          getHouses={this.getHouses}
         />
       );
     });
@@ -51,7 +51,7 @@ export default class Dashboard extends Component {
       <div>
         <div>
           <h1>Dashboard</h1>
-          <Link to="/wizard">
+          <Link to="/wizard/step1">
             <button className="btn">Add New Property</button>
           </Link>
         </div>
